@@ -1,0 +1,39 @@
+---
+title: "Plant Growth"
+author: "Avery Holloman"
+date: "2024-11-02"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+library(readxl)
+Plant_Growth_500_Rows <- read_excel("C:/Users/jacob/Downloads/Plant_Growth_500_Rows.xlsx")
+View(Plant_Growth_500_Rows)
+```
+
+```{r}
+# Since I have already instealled "readxl" package, it is time to load library
+library(readxl)
+
+# Lets take a closer look into the structure of the dataset
+str(Plant_Growth_500_Rows)
+
+# ANOVA would be usefull to analyze the weight differences across all of the groups
+anova_results <- anova(lm(weight ~ group, data = Plant_Growth_500_Rows))
+print(anova_results)
+
+# To different the differences I will add colors to help specifically assign the colors to each group
+colors <- c("lightblue", "lightgreen", "salmon")
+
+# Boxplot
+boxplot(weight ~ group, data = Plant_Growth_500_Rows, 
+        ylab = "Weight", main = "Plant Growth by Group",
+        col = colors, border = "darkgray")
+
+# Adding a legend to represent the colors for each group
+legend("topright", legend = levels(as.factor(Plant_Growth_500_Rows$group)),
+       fill = colors, border = "darkgray", title = "Group")
+
+```
